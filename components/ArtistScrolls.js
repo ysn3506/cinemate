@@ -1,18 +1,17 @@
 import { View, Text, ScrollView, TouchableOpacity } from "react-native";
 import React, { useEffect, useRef } from "react";
-import FeaturedCard from "./FeaturedCard";
+import ArtistCard from "./ArtistCard";
 import { ChevronRightIcon } from "react-native-heroicons/outline";
 import { useNavigation } from "@react-navigation/native";
 
-export default function FeaturedScrolls({ title, data }) {
+export default function ArtistScrolls({ title, data }) {
 	const navigation = useNavigation();
-
 	const scrollRef = useRef(null);
 	useEffect(() => {
 		scrollRef.current.scrollTo({ x: 0, y: 0 });
 	}, [data]);
 	return (
-		<View className='pb-2'>
+		<View className='pb-2 pt-4'>
 			<TouchableOpacity>
 				<Text className='font-bold text-xl text-white'>
 					{title}
@@ -27,16 +26,13 @@ export default function FeaturedScrolls({ title, data }) {
 				}}
 				horizontal
 				showsHorizontalScrollIndicator={false}>
-				{data.map((el) => (
-					<FeaturedCard
-						key={el.id}
-						onPress={() => navigation.navigate("MovieDetail", el)}
-						title={el.title}
-						rating={el?.rating?.toFixed ? `${el?.rating?.toFixed(2)} / 10` : ""}
-						total_vote={el.total_vote}
-						imgUrl={el.image}
-						description={el.description}
-						releaseDate={el.release_date || el.releaseDate}
+				{data.map((artist, index) => (
+					<ArtistCard
+						key={artist.name + index}
+						onPress={() => navigation.navigate("ArtistDetail", artist)}
+						name={artist.name}
+						profile_path={artist.profile_path}
+						character={artist.character}
 					/>
 				))}
 			</ScrollView>

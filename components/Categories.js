@@ -1,7 +1,6 @@
 import { View, Text, ScrollView } from "react-native";
 import React from "react";
 import CategoryCard from "./CategoryCard";
-import { getGenres, getGenresWithImages } from "../apis/requests";
 
 export default function Categories({ title, data }) {
 	return (

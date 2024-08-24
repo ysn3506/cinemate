@@ -3,7 +3,7 @@ import React from "react";
 
 export default function TrendCard({ imgUrl, title, description }) {
 	return (
-		<View className='w-screen mr-2 p-2 items-center  bg-[#1F1D36] rounded-xl'>
+		<View className='w-screen mr-2 p-2 items-center relative  bg-[#1F1D36] rounded-xl'>
 			<Image
 				className='w-full h-80 items-center relative rounded-xl bg-contain'
 				source={{ uri: imgUrl }}></Image>

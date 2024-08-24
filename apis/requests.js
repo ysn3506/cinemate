@@ -1,5 +1,6 @@
 import { API_KEY, API_BASE_URL, POSTER_IMG_BASE_URL } from "@env";
 import axios from "axios";
+import splash from "../assets/favicon.png";
 
 export const getGenres = () =>
 	axios
@@ -28,7 +29,7 @@ export const getTopRatedMovies = () =>
 			resp.map((movie) => ({
 				id: movie.id,
 				title: movie.title,
-				image: `${POSTER_IMG_BASE_URL}${movie.backdrop_path}`,
+				image: `${POSTER_IMG_BASE_URL}${movie.poster_path}`,
 				description: movie.overview,
 				rating: movie.vote_average,
 				total_vote: movie.vote_count,
@@ -46,7 +47,7 @@ export const getUpcomingMovies = () =>
 			resp.map((movie) => ({
 				id: movie.id,
 				title: movie.title,
-				image: `${POSTER_IMG_BASE_URL}${movie.backdrop_path}`,
+				image: `${POSTER_IMG_BASE_URL}${movie.poster_path}`,
 				description: movie.overview,
 				rating: movie.vote_average,
 				total_vote: movie.vote_count,
@@ -64,7 +65,7 @@ export const getNowPlayingMovies = () =>
 			resp.map((movie) => ({
 				id: movie.id,
 				title: movie.title,
-				image: `${POSTER_IMG_BASE_URL}${movie.backdrop_path}`,
+				image: `${POSTER_IMG_BASE_URL}${movie.poster_path}`,
 				description: movie.overview,
 				rating: movie.vote_average,
 				total_vote: movie.vote_count,
@@ -82,10 +83,76 @@ export const getWeeklyTrendMovies = () =>
 			resp.map((movie) => ({
 				id: movie.id,
 				title: movie.title,
-				image: `${POSTER_IMG_BASE_URL}${movie.backdrop_path}`,
+				image: movie.poster_path
+					? `${POSTER_IMG_BASE_URL}${movie.poster_path}`
+					: `${POSTER_IMG_BASE_URL}${movie.backdrop_path}`,
 				description: movie.overview,
 				rating: movie.vote_average,
 				total_vote: movie.vote_count,
 				release_date: movie.release_date?.substring(0, 4),
 			}))
 		);
+
+export const searchKeyword = (text) =>
+	axios
+		.get(`${API_BASE_URL}/search/multi?query=${text}&api_key=${API_KEY}`)
+		.then((resp) => {
+			return resp.data.results;
+		})
+		.then((resp) =>
+			resp.map((element) => ({
+				id: element.id,
+				title: element.name || element.title,
+				image: element?.poster_path
+					? `${POSTER_IMG_BASE_URL}${element?.poster_path}`
+					: element?.profile_path
+					? `${POSTER_IMG_BASE_URL}${element?.profile_path}`
+					: splash,
+				mediaType: element.media_type,
+				description: element.overview,
+				rating: element.vote_average || "",
+				total_vote: element.vote_count || "",
+				releaseDate:
+					element.release_date?.substring(0, 4) ||
+					element.first_air_date?.substring(0, 4) ||
+					"",
+			}))
+		);
+
+export const getMovieDetail = (id) =>
+	axios
+		.get(
+			`${API_BASE_URL}/movie/${id}?api_key=${API_KEY}&append_to_response=credits`
+		)
+		.then((resp) => resp.data);
+
+export const getSimilarMovies = (id) =>
+	axios
+		.get(
+			`${API_BASE_URL}/movie/${id}/similar?api_key=${API_KEY}&append_to_response=credits`
+		)
+		.then((resp) => resp.data.results)
+		.then((resp) =>
+			resp.map((element) => ({
+				id: element.id,
+				title: element.name || element.title,
+				image: element?.poster_path
+					? `${POSTER_IMG_BASE_URL}${element?.poster_path}`
+					: element?.profile_path
+					? `${POSTER_IMG_BASE_URL}${element?.profile_path}`
+					: splash,
+				mediaType: element.media_type,
+				description: element.overview,
+				rating: element.vote_average || "",
+				total_vote: element.vote_count || "",
+				releaseDate:
+					element.release_date?.substring(0, 4) ||
+					element.first_air_date?.substring(0, 4) ||
+					"",
+			}))
+		);
+
+export const getTrailerUrl = (id) =>
+	axios
+		.get(`${API_BASE_URL}/movie/${id}/videos?api_key=${API_KEY}&language=en-US`)
+		.then((resp) => resp?.data?.results[0] || "");
