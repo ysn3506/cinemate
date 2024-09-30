@@ -18,25 +18,27 @@ export default function FeaturedCard({
 			<Image
 				className='w-36 h-48 items-center rounded-xl bg-contain'
 				source={{ uri: imgUrl }}></Image>
-			<View className='w-full pt-4'>
+			<View className='w-36 pt-2 h-28'>
 				<View className='flex-column mb-2'>
-					<Text className='flex-1 mb-1 text-white text-center font-bold'>
+					<Text className='w-full mb-1 text-white text-center font-bold'>
 						{title}
 					</Text>
 				</View>
 
-				<View className='flex-row items-between mb-2'>
-					<View className='flex-row flex-1 space-x-1'>
-						<StarIcon color='gold' size={16} opacity={1} />
-						<Text className='text-white  text-xs'>{rating} </Text>
+				<View className='absolute bottom-2  w-36 px-2'>
+					<View className='flex-row items-between mb-2'>
+						<View className='flex-row flex-1 space-x-1'>
+							<StarIcon color='gold' size={16} opacity={1} />
+							<Text className='text-white  text-xs'>{rating} </Text>
+						</View>
+						<Text className='text-cyan-500 text-xs text-center '>
+							({releaseDate})
+						</Text>
 					</View>
-					<Text className='text-cyan-500 text-xs text-center '>
-						({releaseDate})
-					</Text>
+					{total_vote > 1 && (
+						<Text className='text-cyan-500 text-xs'> ({total_vote} votes)</Text>
+					)}
 				</View>
-				{total_vote > 1 && (
-					<Text className='text-cyan-500 text-xs'> ({total_vote} votes)</Text>
-				)}
 			</View>
 		</TouchableOpacity>
 	);

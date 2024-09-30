@@ -87,7 +87,9 @@ export default function HomeScreen() {
 				<View className='flex-1'>
 					<Text className='text-cyan-500 text-xs'>Welcome Cinephile!</Text>
 				</View>
-				<UserCircleIcon size={40} color='#06b6d4' />
+				<TouchableOpacity onPress={() => navigation.navigate("Signup")}>
+					<UserCircleIcon size={40} color='#06b6d4' />
+				</TouchableOpacity>
 			</View>
 			<View className='flex-row mx-3 pt-1 pb-3  items-center space-x-2'>
 				<View className='flex-row items-center p-3 space-x-2 flex-1 bg-gray-200 rounded-lg'>
@@ -111,7 +113,7 @@ export default function HomeScreen() {
 					)}
 				</View>
 			</View>
-			<ScrollView className='mb-40'>
+			<ScrollView className='mb-30 mx-3'>
 				<TrendScrolls data={weeklyTrendMovies} title='Weekly Trends' />
 				<FeaturedScrolls data={nowPlayingMovies} title='Now Playing' />
 				<FeaturedScrolls data={upComingMovies} title='Upcomings...' />

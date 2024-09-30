@@ -202,10 +202,10 @@ export default function MovieDetail() {
 					</View>
 				</View>
 			</View>
-			<View className='pb-40'>
+			<View className='pb-44'>
 				<ScrollView
 					ref={scrollRef}
-					className='p-4 '
+					className='px-4 '
 					contentContainerStyle={{
 						paddingBottom: 400,
 					}}>

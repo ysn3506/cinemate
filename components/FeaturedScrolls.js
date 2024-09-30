@@ -11,6 +11,7 @@ export default function FeaturedScrolls({ title, data }) {
 	useEffect(() => {
 		scrollRef.current.scrollTo({ x: 0, y: 0 });
 	}, [data]);
+
 	return (
 		<View className='pb-2'>
 			<TouchableOpacity>
